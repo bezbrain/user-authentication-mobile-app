@@ -3,6 +3,7 @@ import { registerUser } from "../api/auth";
 import AuthContent from "../components/Auth/AuthContent";
 import { useAuthContext } from "../context/auth.context";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { Alert } from "react-native";
 
 function SignupScreen() {
   const { isLogin, setIsLogin } = useAuthContext();
@@ -23,7 +24,14 @@ function SignupScreen() {
       retypePassword: confirmPassword,
     };
     setIsAuthenticating(true);
-    await registerUser(user);
+    try {
+      const data = await registerUser(user);
+      // console.log(data);
+      Alert.alert("Successful", `${data.message}`);
+    } catch (error: any) {
+      console.log(error);
+      Alert.alert("Authentication failed", `${error.response.data.message}`);
+    }
     setIsAuthenticating(false);
   }
 
