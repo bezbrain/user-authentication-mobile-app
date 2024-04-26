@@ -40,6 +40,7 @@ function SignupScreen() {
     setIsAuthenticating(false); // Stop loading state
   }
 
+  // LOADING COMPONENT
   if (isAuthenticating) {
     return <LoadingOverlay message="Creating user..." />;
   }

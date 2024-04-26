@@ -12,6 +12,7 @@ import { AuthProvider, useAuthContext } from "./context/auth.context";
 
 const Stack = createNativeStackNavigator();
 
+// AUTHENTICATION SCREENS
 function AuthStack() {
   return (
     <Stack.Navigator
@@ -27,6 +28,7 @@ function AuthStack() {
   );
 }
 
+// AUTHENTICATED SCREENS
 function AuthenticatedStack() {
   return (
     <Stack.Navigator
@@ -41,6 +43,7 @@ function AuthenticatedStack() {
   );
 }
 
+// CONDITIONAL RENDERING OF SCREENS
 function Navigation() {
   const { authToken } = useAuthContext();
 

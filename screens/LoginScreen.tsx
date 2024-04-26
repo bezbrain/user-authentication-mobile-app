@@ -30,6 +30,7 @@ function LoginScreen() {
     setIsAuthenticated(false); // Stop loading state
   }
 
+  // LOADING COMPONENT
   if (isAuthenticated) {
     return <LoadingOverlay message="Logging in user..." />;
   }
