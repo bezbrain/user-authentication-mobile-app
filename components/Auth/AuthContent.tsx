@@ -4,6 +4,8 @@ import { Alert, StyleSheet, View } from "react-native";
 import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/styles";
+import { useNavigation } from "@react-navigation/native";
+import { loginUser } from "../../api/auth";
 
 interface AuthContentProps {
   isLogin?: any;
@@ -14,40 +16,54 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
-    confirmEmail: false,
+    username: false,
     confirmPassword: false,
   });
 
+  const navigation: any = useNavigation();
+
+  // TOGGLE BETWEEN LOGIN AND REGISTER
   function switchAuthModeHandler() {
     // Todo
+    if (isLogin) {
+      return navigation.navigate("Signup");
+    }
+    navigation.navigate("Login");
   }
 
-  function submitHandler(credentials: any) {
-    let { email, confirmEmail, password, confirmPassword } = credentials;
+  // FUNCTION TO TRIGGER LOGIN OR SIGN UP
+  async function submitHandler(credentials: any) {
+    let { email, username, password, confirmPassword } = credentials;
 
     email = email.trim();
     password = password.trim();
 
     const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
-    const emailsAreEqual = email === confirmEmail;
+    const usernameMoreThanTwo = username > 2;
     const passwordsAreEqual = password === confirmPassword;
 
     if (
       !emailIsValid ||
       !passwordIsValid ||
-      (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
+      (!isLogin && (!usernameMoreThanTwo || !passwordsAreEqual))
     ) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
       setCredentialsInvalid({
         email: !emailIsValid,
-        confirmEmail: !emailIsValid || !emailsAreEqual,
+        username: !usernameMoreThanTwo,
         password: !passwordIsValid,
         confirmPassword: !passwordIsValid || !passwordsAreEqual,
       });
       return;
     }
-    onAuthenticate({ email, password });
+    if (isLogin) {
+      // Trigger login request
+      await loginUser(credentials);
+    } else {
+      // Trigger singup request
+    }
+    // onAuthenticate({ email, password });
   }
 
   return (

@@ -15,17 +15,18 @@ function AuthForm(
   { isLogin, onSubmit, credentialsInvalid }: AuthFormProps
 ) {
   const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
 
   const {
     email: emailIsInvalid,
-    confirmEmail: emailsDontMatch,
+    username: lessThanThree,
     password: passwordIsInvalid,
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
 
+  // DYNAMICALLLY COLLECT INPUT VALUES
   function updateInputValueHandler(
     inputType: any,
     enteredValue: SetStateAction<string>
@@ -34,8 +35,8 @@ function AuthForm(
       case "email":
         setEnteredEmail(enteredValue);
         break;
-      case "confirmEmail":
-        setEnteredConfirmEmail(enteredValue);
+      case "username":
+        setUsername(enteredValue);
         break;
       case "password":
         setEnteredPassword(enteredValue);
@@ -46,10 +47,11 @@ function AuthForm(
     }
   }
 
+  // FUNCTION TO PASS THE INPUT VALUES TO OTHER COMPONENTS
   function submitHandler() {
     onSubmit({
       email: enteredEmail,
-      confirmEmail: enteredConfirmEmail,
+      username: username,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
     });
@@ -67,11 +69,11 @@ function AuthForm(
         />
         {!isLogin && (
           <Input
-            label="Confirm Email Address"
-            onUpdateValue={updateInputValueHandler.bind(this, "confirmEmail")}
-            value={enteredConfirmEmail}
-            keyboardType="email-address"
-            isInvalid={emailsDontMatch}
+            label="Username"
+            onUpdateValue={updateInputValueHandler.bind(this, "username")}
+            value={username}
+            // keyboardType=""
+            isInvalid={lessThanThree}
           />
         )}
         <Input
