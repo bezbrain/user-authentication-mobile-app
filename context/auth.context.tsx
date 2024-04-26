@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [authToken, setAuthToken] = useState("");
 
+  // SAVE TOKEN IN A STATE AND ON THE DEVICE
   function authenticate(token: string) {
     setAuthToken(token);
     // console.log(token);
