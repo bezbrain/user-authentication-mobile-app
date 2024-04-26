@@ -30,13 +30,14 @@ function SignupScreen() {
     try {
       const data = await registerUser(user);
       // console.log(data);
+      setIsLogin(true); // Initiate login navigation
+      navigation.replace("Login"); // Navigate to login screen if sign up successful
       Alert.alert("Successful", `${data.message}`);
     } catch (error: any) {
       // console.log(error);
       Alert.alert("Authentication failed", `${error.response.data.message}`);
     }
     setIsAuthenticating(false); // Stop loading state
-    navigation.replace("Login"); // Navigate to login screen if sign up successful
   }
 
   if (isAuthenticating) {
