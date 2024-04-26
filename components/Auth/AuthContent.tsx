@@ -59,7 +59,13 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
     }
     if (isLogin) {
       // Trigger login request
-      await loginUser(credentials);
+      const user = {
+        email,
+        password,
+      };
+      console.log("Loading...");
+      await loginUser(user);
+      console.log("Completed");
     } else {
       // Trigger singup request
     }
