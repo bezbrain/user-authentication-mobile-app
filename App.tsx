@@ -9,6 +9,9 @@ import SignupScreen from "./screens/SignupScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import { Colors } from "./constants/styles";
 import { AuthProvider, useAuthContext } from "./context/auth.context";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,13 +57,40 @@ function Navigation() {
   );
 }
 
+// SET TOKEN IN THIS COMPONENT
+function Root() {
+  const { setAuthToken } = useAuthContext();
+
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
+
+  // Authomatically login a user if auth token is in AsyncStorage
+  useEffect(() => {
+    async function fetchToken() {
+      const storedToken = await AsyncStorage.getItem("token"); // This will return promise
+
+      if (storedToken) {
+        setAuthToken(storedToken);
+      }
+
+      setIsTryingLogin(false); // If user has or has not been automatically logged in, set to false
+    }
+    fetchToken();
+  }, []);
+
+  if (isTryingLogin) {
+    return <AppLoading />;
+  }
+
+  return <Navigation />;
+}
+
 export default function App() {
   return (
     <>
       <StatusBar style="light" />
 
       <AuthProvider>
-        <Navigation />
+        <Root />
       </AuthProvider>
     </>
   );

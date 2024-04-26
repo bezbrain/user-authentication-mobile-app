@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const AppContext = createContext<any>(undefined);
 
@@ -10,11 +17,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // SAVE TOKEN IN A STATE AND ON THE DEVICE
   function authenticate(token: string) {
     setAuthToken(token);
+    AsyncStorage.setItem("token", token);
     // console.log(token);
   }
 
   function logout() {
     setAuthToken("");
+    AsyncStorage.removeItem("token");
   }
 
   return (
