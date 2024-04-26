@@ -74,6 +74,8 @@ function AuthContent({
       };
       console.log("Loading...");
       await loginUser(user);
+      // console.log(`return ${data}`);
+
       console.log("Completed");
     } else {
       // Trigger singup request

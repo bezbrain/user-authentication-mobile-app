@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Alert } from "react-native";
 
 export const registerUser = async (user: Object) => {
   try {
@@ -21,10 +22,11 @@ export const loginUser = async (user: Object) => {
       user
     );
     console.log(data);
-
+    Alert.alert("Successful", `${data.message}`);
     return data;
   } catch (error: any) {
     console.log(error);
     console.log(error.response.data.message);
+    Alert.alert("Invalid Input", `${error.response.data.message}`);
   }
 };
