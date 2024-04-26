@@ -21,7 +21,7 @@ function LoginScreen() {
       const data = await loginUser(user);
       // console.log(data.token);
       Alert.alert("Successful", `${data.message}`);
-      authenticate(data.token);
+      authenticate(data.token); // Save token in a state
     } catch (error: any) {
       // console.log(error);
       Alert.alert("Authentication failed", `${error.response.data.message}`);

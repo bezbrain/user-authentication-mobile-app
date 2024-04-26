@@ -8,7 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import { Colors } from "./constants/styles";
-import { AuthProvider } from "./context/auth.context";
+import { AuthProvider, useAuthContext } from "./context/auth.context";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,9 +42,11 @@ function AuthenticatedStack() {
 }
 
 function Navigation() {
+  const { authToken } = useAuthContext();
+
   return (
     <NavigationContainer>
-      <AuthStack />
+      {!authToken ? <AuthStack /> : <AuthenticatedStack />}
     </NavigationContainer>
   );
 }

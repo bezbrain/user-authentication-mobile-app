@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   function authenticate(token: string) {
     setAuthToken(token);
-    console.log(token);
+    // console.log(token);
   }
 
   function logout() {

@@ -4,11 +4,14 @@ import AuthContent from "../components/Auth/AuthContent";
 import { useAuthContext } from "../context/auth.context";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 function SignupScreen() {
   const { isLogin, setIsLogin } = useAuthContext();
 
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const navigation: any = useNavigation();
 
   // SIGN UP A USER
   async function handleSignUp(
@@ -29,10 +32,11 @@ function SignupScreen() {
       // console.log(data);
       Alert.alert("Successful", `${data.message}`);
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       Alert.alert("Authentication failed", `${error.response.data.message}`);
     }
     setIsAuthenticating(false);
+    navigation.replace("Login");
   }
 
   if (isAuthenticating) {
