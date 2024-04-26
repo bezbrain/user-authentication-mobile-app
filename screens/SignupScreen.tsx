@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { registerUser } from "../api/auth";
 import AuthContent from "../components/Auth/AuthContent";
 import { useAuthContext } from "../context/auth.context";
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 
 function SignupScreen() {
   const { isLogin, setIsLogin } = useAuthContext();
+
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // SIGN UP A USER
   async function handleSignUp(
@@ -18,11 +22,13 @@ function SignupScreen() {
       password,
       retypePassword: confirmPassword,
     };
-    console.log(user);
-
-    console.log("Loading registration...");
+    setIsAuthenticating(true);
     await registerUser(user);
-    console.log("Registration Completed");
+    setIsAuthenticating(false);
+  }
+
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Creating user..." />;
   }
 
   return (
