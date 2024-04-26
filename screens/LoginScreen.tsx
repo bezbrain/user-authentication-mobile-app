@@ -3,9 +3,10 @@ import { useAuthContext } from "../context/auth.context";
 import { loginUser } from "../api/auth";
 import { useState } from "react";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { Alert } from "react-native";
 
 function LoginScreen() {
-  const { isLogin, setIsLogin } = useAuthContext();
+  const { isLogin, setIsLogin, authenticate, authToken } = useAuthContext();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -16,7 +17,16 @@ function LoginScreen() {
       password,
     };
     setIsAuthenticated(true);
-    await loginUser(user);
+    try {
+      const data = await loginUser(user);
+      // console.log(data.token);
+      Alert.alert("Successful", `${data.message}`);
+      authenticate(data.token);
+    } catch (error: any) {
+      // console.log(error);
+      Alert.alert("Authentication failed", `${error.response.data.message}`);
+    }
+
     setIsAuthenticated(false);
   }
 

@@ -21,17 +21,9 @@ export const registerUser = async (user: Object) => {
 
 // LOGIN A USER
 export const loginUser = async (user: Object) => {
-  try {
-    const { data } = await axios.post(
-      `https://minimag.onrender.com/api/v1/login`,
-      user
-    );
-    console.log(data);
-    Alert.alert("Successful", `${data.message}`);
-    return data;
-  } catch (error: any) {
-    console.log(error);
-    // console.log(error.response.data.message);
-    Alert.alert("Authentication failed", `${error.response.data.message}`);
-  }
+  const { data } = await axios.post(
+    `https://minimag.onrender.com/api/v1/login`,
+    user
+  );
+  return data;
 };
