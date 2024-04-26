@@ -77,6 +77,7 @@ function Root() {
     fetchToken();
   }, []);
 
+  // This is to make sure that if a user was initially logged in and the app is reaccessed, the delay caused by useEffect does not make the login in page show before the expected page if a user is logged in
   if (isTryingLogin) {
     return <AppLoading />;
   }
