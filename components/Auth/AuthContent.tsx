@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
 import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
-import { loginUser } from "../../api/auth";
+import { loginUser, registerUser } from "../../api/auth";
 
 interface AuthContentProps {
-  isLogin?: any;
-  onAuthenticate?: any;
+  isLogin?: boolean | undefined;
+  onAuthenticate?: () => void;
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
 }
 
-function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
+function AuthContent({
+  isLogin,
+  onAuthenticate,
+  setIsLogin,
+}: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -24,11 +29,11 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
 
   // TOGGLE BETWEEN LOGIN AND REGISTER
   function switchAuthModeHandler() {
-    // Todo
     if (isLogin) {
-      return navigation.navigate("Signup");
+      navigation.navigate("Signup");
+    } else {
+      navigation.navigate("Login");
     }
-    navigation.navigate("Login");
   }
 
   // FUNCTION TO TRIGGER LOGIN OR SIGN UP
@@ -68,6 +73,15 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
       console.log("Completed");
     } else {
       // Trigger singup request
+      const user = {
+        email,
+        username,
+        password,
+        retypePassword: confirmPassword,
+      };
+      console.log("Loading registration...");
+      await registerUser(user);
+      console.log("Registration Completed");
     }
     // onAuthenticate({ email, password });
   }
