@@ -16,7 +16,7 @@ function LoginScreen() {
       email,
       password,
     };
-    setIsAuthenticated(true);
+    setIsAuthenticated(true); // Initiate loading state
     try {
       const data = await loginUser(user);
       // console.log(data.token);
@@ -27,7 +27,7 @@ function LoginScreen() {
       Alert.alert("Authentication failed", `${error.response.data.message}`);
     }
 
-    setIsAuthenticated(false);
+    setIsAuthenticated(false); // Stop loading state
   }
 
   if (isAuthenticated) {

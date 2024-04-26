@@ -26,7 +26,7 @@ function SignupScreen() {
       password,
       retypePassword: confirmPassword,
     };
-    setIsAuthenticating(true);
+    setIsAuthenticating(true); // Initiate loading state
     try {
       const data = await registerUser(user);
       // console.log(data);
@@ -35,8 +35,8 @@ function SignupScreen() {
       // console.log(error);
       Alert.alert("Authentication failed", `${error.response.data.message}`);
     }
-    setIsAuthenticating(false);
-    navigation.replace("Login");
+    setIsAuthenticating(false); // Stop loading state
+    navigation.replace("Login"); // Navigate to login screen if sign up successful
   }
 
   if (isAuthenticating) {
