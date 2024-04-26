@@ -2,6 +2,7 @@ import AuthContent from "../components/Auth/AuthContent";
 import { useAuthContext } from "../context/auth.context";
 import { loginUser } from "../api/auth";
 import { useState } from "react";
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 
 function LoginScreen() {
   const { isLogin, setIsLogin } = useAuthContext();
@@ -17,6 +18,10 @@ function LoginScreen() {
     setIsAuthenticated(true);
     await loginUser(user);
     setIsAuthenticated(false);
+  }
+
+  if (isAuthenticated) {
+    return <LoadingOverlay message="Logging in user..." />;
   }
 
   return (

@@ -70,8 +70,6 @@ function AuthContent({
       // Trigger signup request
       handleAuth(email, username, password, confirmPassword);
     } else {
-      console.log("Login running");
-
       if (!email || !password) {
         Alert.alert("Invalid input", "Please check your entered credentials.");
         return;
