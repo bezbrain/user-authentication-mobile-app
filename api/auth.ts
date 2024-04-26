@@ -15,7 +15,7 @@ export const registerUser = async (user: Object) => {
   } catch (error: any) {
     console.log(error);
     // console.log(error.response.data.message);
-    Alert.alert("Invalid Input", `${error.response.data.message}`);
+    Alert.alert("Authentication failed", `${error.response.data.message}`);
   }
 };
 
@@ -32,6 +32,6 @@ export const loginUser = async (user: Object) => {
   } catch (error: any) {
     console.log(error);
     // console.log(error.response.data.message);
-    Alert.alert("Invalid Input", `${error.response.data.message}`);
+    Alert.alert("Authentication failed", `${error.response.data.message}`);
   }
 };
