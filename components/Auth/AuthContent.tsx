@@ -11,12 +11,14 @@ interface AuthContentProps {
   isLogin?: boolean | undefined;
   onAuthenticate?: () => void;
   setIsLogin: Dispatch<SetStateAction<boolean>>;
+  handleAuth: any;
 }
 
 function AuthContent({
   isLogin,
   onAuthenticate,
   setIsLogin,
+  handleAuth,
 }: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
@@ -30,12 +32,10 @@ function AuthContent({
   // TOGGLE BETWEEN LOGIN AND REGISTER
   function switchAuthModeHandler() {
     if (isLogin) {
-      // console.log(isLogin);
       setIsLogin(false);
       navigation.replace("Signup");
     } else {
       setIsLogin(true);
-      // console.log(isLogin);
       navigation.replace("Login");
     }
   }
@@ -68,26 +68,10 @@ function AuthContent({
     }
     if (isLogin) {
       // Trigger login request
-      const user = {
-        email,
-        password,
-      };
-      console.log("Loading...");
-      await loginUser(user);
-      // console.log(`return ${data}`);
-
-      console.log("Completed");
+      handleAuth(email, password);
     } else {
       // Trigger singup request
-      const user = {
-        email,
-        username,
-        password,
-        retypePassword: confirmPassword,
-      };
-      console.log("Loading registration...");
-      await registerUser(user);
-      console.log("Registration Completed");
+      handleAuth(email, username, password, confirmPassword);
     }
     // onAuthenticate({ email, password });
   }
