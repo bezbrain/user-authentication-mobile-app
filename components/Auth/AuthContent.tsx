@@ -30,8 +30,12 @@ function AuthContent({
   // TOGGLE BETWEEN LOGIN AND REGISTER
   function switchAuthModeHandler() {
     if (isLogin) {
+      // console.log(isLogin);
+      setIsLogin(false);
       navigation.navigate("Signup");
     } else {
+      setIsLogin(true);
+      // console.log(isLogin);
       navigation.navigate("Login");
     }
   }
