@@ -5,6 +5,7 @@ import { useAuthContext } from "../context/auth.context";
 function SignupScreen() {
   const { isLogin, setIsLogin } = useAuthContext();
 
+  // SIGN UP A USER
   async function handleSignUp(
     email: string,
     username: string,
@@ -17,6 +18,8 @@ function SignupScreen() {
       password,
       retypePassword: confirmPassword,
     };
+    console.log(user);
+
     console.log("Loading registration...");
     await registerUser(user);
     console.log("Registration Completed");

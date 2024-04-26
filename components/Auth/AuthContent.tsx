@@ -5,7 +5,6 @@ import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
-import { loginUser, registerUser } from "../../api/auth";
 
 interface AuthContentProps {
   isLogin?: boolean | undefined;
@@ -49,29 +48,36 @@ function AuthContent({
 
     const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
-    const usernameMoreThanTwo = username > 2;
+    const usernameMoreThanTwo = username.length > 2;
     const passwordsAreEqual = password === confirmPassword;
 
-    if (
-      !emailIsValid ||
-      !passwordIsValid ||
-      (!isLogin && (!usernameMoreThanTwo || !passwordsAreEqual))
-    ) {
-      Alert.alert("Invalid input", "Please check your entered credentials.");
-      setCredentialsInvalid({
-        email: !emailIsValid,
-        username: !usernameMoreThanTwo,
-        password: !passwordIsValid,
-        confirmPassword: !passwordIsValid || !passwordsAreEqual,
-      });
-      return;
-    }
-    if (isLogin) {
+    if (!isLogin) {
+      if (
+        !emailIsValid ||
+        !passwordIsValid ||
+        !usernameMoreThanTwo ||
+        !passwordsAreEqual
+      ) {
+        Alert.alert("Invalid input", "Please check your entered credentials.");
+        setCredentialsInvalid({
+          email: !emailIsValid,
+          username: !usernameMoreThanTwo,
+          password: !passwordIsValid,
+          confirmPassword: !passwordIsValid || !passwordsAreEqual,
+        });
+        return;
+      }
+      // Trigger signup request
+      handleAuth(email, username, password, confirmPassword);
+    } else {
+      console.log("Login running");
+
+      if (!email || !password) {
+        Alert.alert("Invalid input", "Please check your entered credentials.");
+        return;
+      }
       // Trigger login request
       handleAuth(email, password);
-    } else {
-      // Trigger singup request
-      handleAuth(email, username, password, confirmPassword);
     }
     // onAuthenticate({ email, password });
   }
