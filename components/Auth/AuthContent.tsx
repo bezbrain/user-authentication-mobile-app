@@ -32,11 +32,11 @@ function AuthContent({
     if (isLogin) {
       // console.log(isLogin);
       setIsLogin(false);
-      navigation.navigate("Signup");
+      navigation.replace("Signup");
     } else {
       setIsLogin(true);
       // console.log(isLogin);
-      navigation.navigate("Login");
+      navigation.replace("Login");
     }
   }
 
