@@ -19,6 +19,7 @@ import {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthStack from "./navigations/authStack";
+import AuthenticatedStack from "./navigations/authenticatedStacks";
 // import AppLoading from "expo-app-loading";
 
 // Keep the splash screen visible while we fetch resources
@@ -29,21 +30,6 @@ const Stack = createNativeStackNavigator();
 interface NavigationProps {
   isTryingLogin: boolean;
   setIsTryingLogin: Dispatch<SetStateAction<boolean>>;
-}
-
-// AUTHENTICATED SCREENS
-function AuthenticatedStack() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: "white",
-        contentStyle: { backgroundColor: Colors.primary100 },
-      }}
-    >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-    </Stack.Navigator>
-  );
 }
 
 // CONDITIONAL RENDERING OF SCREENS
