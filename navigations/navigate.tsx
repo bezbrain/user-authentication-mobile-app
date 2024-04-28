@@ -24,7 +24,7 @@ function Navigation({ isTryingLogin, setIsTryingLogin }: NavigationProps) {
       } catch (error) {
         console.warn(error);
       } finally {
-        setIsTryingLogin(false);
+        // setIsTryingLogin(false);
       }
     }
 

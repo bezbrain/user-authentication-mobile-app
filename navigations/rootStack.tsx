@@ -19,6 +19,7 @@ function Root() {
 
       setIsTryingLogin(false); // If user has or has not been automatically logged in, set to false
     }
+
     fetchToken();
   }, []);
 
